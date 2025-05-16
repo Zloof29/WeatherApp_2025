@@ -10,19 +10,19 @@ class Cyber {
 
   public hash(plainText: string): string {
     return crypto
-      .createHmac("sha512", this.hashingSalt)
+      .createHmac("SHA-512", this.hashingSalt)
       .update(plainText)
       .digest("hex");
   }
 
   public generateNewToken(user: UserModel): string {
-    delete user.password;
+    const userCopy = JSON.parse(JSON.stringify(user));
 
-    const container = { user };
+    delete userCopy.password;
 
     const options: SignOptions = { expiresIn: "3h" };
 
-    const token = jwt.sign(container, this.secretKey, options);
+    const token = jwt.sign(userCopy, this.secretKey, options);
 
     return token;
   }
@@ -34,19 +34,19 @@ class Cyber {
       jwt.verify(token, this.secretKey);
 
       return true;
-    } catch (err: any) {
+    } catch (error: any) {
       return false;
     }
   }
 
   public isAdmin(token: string): boolean {
     try {
-      const container = jwt.decode(token) as { user: UserModel };
+      const container = jwt.decode(token) as UserModel;
 
-      const user = container.user;
+      const user = container;
 
       return user.roleId === Role.Admin;
-    } catch (err: any) {
+    } catch (error: any) {
       return false;
     }
   }

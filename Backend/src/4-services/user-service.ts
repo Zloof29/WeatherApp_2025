@@ -4,24 +4,22 @@ import { UserModel } from "../3-models/user-model";
 import { Role } from "../3-models/enums";
 import { cyber } from "../2-utils/cyber";
 import { CredentialsModel } from "../3-models/credentials-model";
-import { UnauthorizedError } from "../3-models/client-error";
+import { UnauthorizedError, ValidationError } from "../3-models/client-error";
 
 class UserService {
-  // Register new user:
   public async register(user: UserModel) {
-    // Validation...
-    // user.validate();
+    const userValidation = user.validate();
 
-    // SQL:
+    if (userValidation.error) {
+      throw new ValidationError(userValidation.error.message);
+    }
+
     const sql = "insert into users values(default,?,?,?,?,?)";
 
-    // Set role as regular user and not something else:
     user.roleId = Role.User;
 
-    // Hash password:
     user.password = cyber.hash(user.password);
 
-    // Values:
     const values = [
       user.firstName,
       user.lastName,
@@ -30,48 +28,34 @@ class UserService {
       user.roleId,
     ];
 
-    // Execute:
     const info: OkPacketParams = await dal.execute(sql, values);
 
-    // Set back id:
     user.id = info.insertId;
 
-    // Create JWT (Json Web Token):
     const token = cyber.generateNewToken(user);
 
-    // Return:
     return token;
   }
 
   public async login(credentials: CredentialsModel) {
-    // Validation...
-    // user.validate();
+    const credentialsValidate = credentials.validate();
 
-    // SQL:
-    // const sql = "select * from users where email = ? and password = ?";
+    if (credentialsValidate.error)
+      throw new ValidationError(credentialsValidate.error.message);
 
-    // Hash password:
+    const sql = "select * from users where email = ? and password = ?";
+
     credentials.password = cyber.hash(credentials.password);
 
-    const sql = `select * from users where email = '${credentials.email}' and password = '${credentials.password}'`;
+    const values = [credentials.email, credentials.password];
 
-    // Values:
-    // const values = [credentials.email, credentials.password];
-
-    // Execute:
-    // const users = await dal.execute(sql, values);
-    const users = await dal.execute(sql);
-
-    // Extract user:
+    const users = await dal.execute(sql, values);
     const user = users[0];
 
-    // If no user:
     if (!user) throw new UnauthorizedError("Incorrect email or password.");
 
-    // Create JWT (Json Web Token):
     const token = cyber.generateNewToken(user);
 
-    // Return:
     return token;
   }
 }
