@@ -7,7 +7,7 @@ import https from "https";
 import path from "path";
 import { fileSaver } from "uploaded-file-saver";
 import { appConfig } from "./2-utils/app-config";
-import { productController } from "./5-controllers/product-controller";
+import { productController } from "./5-controllers/weather-controller";
 import { userController } from "./5-controllers/user-controller";
 import { errorsMiddleware } from "./6-middleware/errors-middleware";
 import { securityMiddleware } from "./6-middleware/security-middleware";
