@@ -1,0 +1,10 @@
+Time: Mon May 26 2025 19:58:34 GMT+0300 (שעון ישראל (קיץ))
+Message: Route /api/weather/London on method GET not exist.
+Stack: undefined
+---------------------------------------
+
+Time: Mon May 26 2025 19:59:42 GMT+0300 (שעון ישראל (קיץ))
+Message: Route //cdn.weatherapi.com/weather/64x64/night/113.png on method GET not exist.
+Stack: undefined
+---------------------------------------
+
