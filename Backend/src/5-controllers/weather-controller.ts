@@ -17,13 +17,14 @@ class WeatherController {
   ) {
     try {
       const city = request.query.city as string;
-      if (!city) {
+      const country = request.query.country as string;
+      if (!city || !country) {
         return response
           .status(StatusCode.BadRequest)
-          .json({ error: "City is requires." });
+          .json({ error: "City and country are requires." });
       }
 
-      const weatherData = await weatherService.getWeather(city);
+      const weatherData = await weatherService.getWeather(city, country);
       return response.json(weatherData);
     } catch (error: any) {
       next(error);
