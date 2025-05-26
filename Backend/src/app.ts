@@ -12,8 +12,6 @@ import { userController } from "./5-controllers/user-controller";
 import { errorsMiddleware } from "./6-middleware/errors-middleware";
 import { securityMiddleware } from "./6-middleware/security-middleware";
 
-fileSaver.config(path.join("__dirname", "1-assets", "images"));
-
 const server = express();
 
 // server.use(expressRateLimit({
