@@ -1,6 +1,8 @@
 .Weather {
   display: flex;
   justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 .Error {
@@ -12,4 +14,13 @@ input {
   justify-content: center;
   flex-direction: row;
   width: 100%;
+}
+
+button {
+  width: 100%;
+}
+
+.Info {
+  padding: 10px;
+  text-align: center;
 }
