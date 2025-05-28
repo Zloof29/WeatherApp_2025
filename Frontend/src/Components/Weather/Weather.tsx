@@ -30,60 +30,66 @@ export function Weather(): React.ReactElement {
   return (
     <div className={styles.Weather}>
       <form onSubmit={handleSubmit(send)}>
-        <input
-          type="text"
-          placeholder="City"
-          {...register("location.name", {
-            required: "City is required!",
-            minLength: {
-              value: 2,
-              message: "City must be at least 2 characters!",
-            },
-            maxLength: {
-              value: 50,
-              message: "City must be less then 50 characters!",
-            },
-            pattern: {
-              value: /^[A-Za-z\s]+$/,
-              message: "City must contain only letters!",
-            },
-          })}
-          onBlur={(e) => setValue("location.name", e.target.value.trim())}
-        />
-
+        <div className="input-group mb-3">
+          <span className="input-group-text">City and Country</span>
+          <input
+            type="text"
+            aria-label="City"
+            className="form-control"
+            placeholder="City"
+            {...register("location.name", {
+              required: "City is required!",
+              minLength: {
+                value: 2,
+                message: "City must be at least 2 characters!",
+              },
+              maxLength: {
+                value: 50,
+                message: "City must be less then 50 characters!",
+              },
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message: "City must contain only letters!",
+              },
+              setValueAs: (value) => value.trim(),
+            })}
+          />
+          <input
+            type="text"
+            aria-label="Country"
+            className="form-control"
+            placeholder="Country"
+            {...register("location.country", {
+              required: "Country is required!",
+              minLength: {
+                value: 2,
+                message: "Country must be at least 2 characters!",
+              },
+              maxLength: {
+                value: 50,
+                message: "Country must be less then 50 characters!",
+              },
+              pattern: {
+                value: /^[A-Za-z\s]+$/,
+                message: "Country must contain only letters!",
+              },
+            })}
+          />
+        </div>
         {errors.location?.name && (
           <span className={styles.Error}>{errors.location.name.message}</span>
         )}
-
-        <input
-          type="text"
-          placeholder="Country"
-          {...register("location.country", {
-            required: "Country is required!",
-            minLength: {
-              value: 2,
-              message: "Country must be at least 2 characters!",
-            },
-            maxLength: {
-              value: 50,
-              message: "Country must be less then 50 characters!",
-            },
-            pattern: {
-              value: /^[A-Za-z\s]+$/,
-              message: "Country must contain only letters!",
-            },
-          })}
-          onBlur={(e) => setValue("location.country", e.target.value.trim())}
-        />
         {errors.location?.country && (
           <span className={styles.Error}>
             {errors.location.country.message}
           </span>
         )}
-        <button type="submit">search</button>
+        <button type="submit" className="btn btn-primary">
+          search
+        </button>
 
         {information && typeof information !== "string" && (
-          <div>
+          <div className={styles.Info}>
             <h2>
               Weather information for {information.location.name},{" "}
               {information.location.country}
@@ -93,7 +99,10 @@ export function Weather(): React.ReactElement {
             </p>
             <p>Last updated: {information.current.last_updated}</p>
             <p>Region: {information.location.region}</p>
+            <p>Weather Condition: {information.current.condition.text}</p>
             <p>Temperature: {information.current.temp_c}</p>
+            <p>Local time: {information.location.localtime}</p>
+            <p>Is day? {information.current.is_day === 0 ? "No" : "Yes"}</p>
           </div>
         )}
       </form>
