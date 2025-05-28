@@ -8,3 +8,8 @@ Message: Route //cdn.weatherapi.com/weather/64x64/night/113.png on method GET no
 Stack: undefined
 ---------------------------------------
 
+Time: Wed May 28 2025 18:35:00 GMT+0300 (שעון ישראל (קיץ))
+Message: Route /api/weatherlodisrael on method GET not exist.
+Stack: undefined
+---------------------------------------
+

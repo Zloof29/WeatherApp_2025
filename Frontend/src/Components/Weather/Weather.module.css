@@ -1,0 +1,15 @@
+.Weather {
+  display: flex;
+  justify-content: center;
+}
+
+.Error {
+  color: red;
+}
+
+input {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}

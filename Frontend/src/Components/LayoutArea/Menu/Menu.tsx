@@ -1,9 +1,5 @@
-import "./Menu.css";
+import styles from "./Menu.module.css";
 
-export function Menu(): JSX.Element {
-    return (
-        <div className="Menu">
-			
-        </div>
-    );
+export function Menu(): React.ReactElement {
+  return <div className={styles.Menu}></div>;
 }

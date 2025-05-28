@@ -1,9 +1,5 @@
-import "./Page404.css";
+import styles from "./Page404.module.css";
 
-export function Page404(): JSX.Element {
-    return (
-        <div className="Page404">
-			
-        </div>
-    );
+export function Page404(): React.ReactElement {
+  return <div className={styles.Page404}>404 page</div>;
 }
